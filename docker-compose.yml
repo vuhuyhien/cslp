@@ -1,0 +1,15 @@
+version: '3'
+services:
+    db:
+        image: mariadb:10.2.8
+        ports:
+            - "3306:3306"
+        volumes:
+            - db-data:/var/lib/mysql
+        environment:
+            MYSQL_ROOT_PASSWORD: root
+            MYSQL_DATABASE: blog_cg
+            MYSQL_USER: blog_cg
+            MYSQL_PASSWORD: blog_cg                
+volumes:
+    db-data:

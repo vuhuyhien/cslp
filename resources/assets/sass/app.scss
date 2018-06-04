@@ -1,0 +1,43 @@
+
+// Fonts
+@import url("https://fonts.googleapis.com/css?family=Raleway:300,400,600");
+
+// Variables
+@import "variables";
+
+// Bootstrap
+@import '~bootstrap/scss/bootstrap';
+
+.navbar-laravel {
+  background-color: #fff;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
+}
+
+#avatar {
+    position: relative;
+    &:hover{
+        .change-avatar {
+            display: block;
+        }
+    }
+
+    .change-avatar {
+        display: none;
+        cursor: pointer;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        position: absolute;
+        background-color: rgba(0, 0, 0, 0.5);
+        text-align: center;
+        line-height: 28px;
+        a {
+            color: white;
+            font-weight: bold;
+        }
+    }
+}
+
+#profile-reset-password{
+    color: white;
+}
