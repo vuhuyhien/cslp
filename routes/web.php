@@ -22,6 +22,9 @@ Route::group(['prefix' => 'admin'],function(){
         Route::get('/profile', 'Admin\UserController@index')->name('profile');
         Route::post('/change-name', 'Admin\UserController@changeName')->name('change-name');
         Route::post('/change-email', 'Admin\UserController@changeEmail')->name('change-email');
+        Route::resources([
+            'posts' => 'Admin\PostController'
+        ]);
     });
 
     Route::get('/confirm-change-email/{token}', 'Admin\UserController@confirmChangeEmail');
