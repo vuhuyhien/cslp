@@ -7,18 +7,37 @@ use App\Http\Controllers\Controller;
 use Auth;
 use Log;
 use App\Http\Requests\ChangeName;
-use App\Http\Requests\ChangeEmail;
+use App\Mail\ConfirmChangeMail;
+use App\Repositories\Contracts\ChangeEmailRepositoryInterface as ChangeEmailRepository;
+use App\Repositories\Contracts\UserRepositoryInterface as UserRepository;
+use Validator;
+use Mail;
 
 class UserController extends Controller
 {
+    /**
+     * change email repository
+     * 
+     * @property ChangeEmailRepositoryInterface $changeEmail
+     */
+    private $changeEmail;
+    
+    /**
+    * user repository
+    * 
+    * @property UserRepository $user
+    */
+    private $user;
+
     /**
      * Create a new controller instance.
      *
      * @return void
      */
-    public function __construct()
+    public function __construct(ChangeEmailRepository $changeEmail, UserRepository $user)
     {
-        $this->middleware('auth');
+        $this->changeEmail = $changeEmail;
+        $this->user = $user;
     }
 
     /**
@@ -65,18 +84,30 @@ class UserController extends Controller
     public function changeEmail(Request $req)
     {
         $email = $req->get('email');
-        if(Auth::user()->email === $email) {
-            $req->session()->flash('status', 'Change email sucessful!');
+        $user = Auth::user();
+        if($user->email === $email) {
+            Log::info("New email same as current email");
+            $req->session()->flash('status', 'Change email successful!');
 
             return redirect()->route('profile');
         }
 
-        $validated = $req->validate([
+        $validator = Validator::make($req->all(), [
             'email' => 'required|email|unique:users'
         ]);
-        if($validated->fails()) {
+
+        if($validator->fails()) {
             return redirect()->route('profile')->with('errors', $validated->errors());
         }
+
+        Log::info('Send email to confirm');
+        $changeEmail = $this->changeEmail->add($user, $email);
+        $link = url("/admin/confirm-change-email/" . $changeEmail->token);
+        Mail::to($user)->send(new ConfirmChangeMail($user, $changeEmail, $link));
+
+        $req->session()->flash('status', 'Please check your inbox to complete change email request');
+
+        return redirect()->route('profile');
     }
 
     /**
@@ -98,5 +129,14 @@ class UserController extends Controller
             }
         }
 
+    }
+
+    public function confirmChangeEmail($token)
+    {
+        if ($this->user->changeMail($token)) {
+            return view('admin.confirmed-email');
+        } else {
+            abort(404);
+        }
     }
 }

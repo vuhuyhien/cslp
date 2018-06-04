@@ -17,11 +17,15 @@ Route::get('/', function () {
 
 // Auth::routes();
 Route::group(['prefix' => 'admin'],function(){
-    Route::get('/', 'Admin\AdminController@index');
-    Route::get('/profile', 'Admin\UserController@index')->name('profile');
-    Route::post('/change-name', 'Admin\UserController@changeName')->name('change-name');
-    Route::post('/change-email', 'Admin\UserController@changeEmail')->name('change-email');
+    Route::middleware(['auth'])->group(function () {
+        Route::get('/', 'Admin\AdminController@index');
+        Route::get('/profile', 'Admin\UserController@index')->name('profile');
+        Route::post('/change-name', 'Admin\UserController@changeName')->name('change-name');
+        Route::post('/change-email', 'Admin\UserController@changeEmail')->name('change-email');
+    });
 
+    Route::get('/confirm-change-email/{token}', 'Admin\UserController@confirmChangeEmail');
+    
     Route::group(['namespace' => 'Auth'], function () {
         // Authentication Routes...
         Route::get('login', 'LoginController@showLoginForm')->name('login');
@@ -38,7 +42,6 @@ Route::group(['prefix' => 'admin'],function(){
         Route::get('password/reset/{token}', 'ResetPasswordController@showResetForm')->name('password.reset');
         Route::post('password/reset', 'ResetPasswordController@reset');
     });
-    
 });
 
 Route::get('/home', 'HomeController@index')->name('home');

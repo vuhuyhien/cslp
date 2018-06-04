@@ -12,9 +12,9 @@ class ChangeEmailRepository extends BaseRepository implements ChangeEmailReposit
         return ChangeEmail::class;
     }
 
-    public function create(User $user, $email)
+    public function add(User $user, $email)
     {
-        return parent::create([
+        return $this->create([
             'user_id' => $user->id,
             'token' => uniqid('email', true),
             'email' => $email,
@@ -29,9 +29,9 @@ class ChangeEmailRepository extends BaseRepository implements ChangeEmailReposit
                 ->first();
     }
 
-    public static function expire($token)
+    public function expire($token)
     {
-        $changeEmail = ChangeEmail::find($token);
+        $changeEmail = $this->findBy('token', $token);
         $changeEmail->is_expired = 1;
         $changeEmail->save();
     }
