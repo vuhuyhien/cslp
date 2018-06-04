@@ -9,23 +9,26 @@
 | routes are loaded by the RouteServiceProvider within a group which
 | contains the "web" middleware group. Now create something great!
 |
-*/
+ */
 
 Route::get('/', function () {
     return view('welcome');
 });
 
 // Auth::routes();
-Route::group(['prefix' => 'admin'],function(){
+Route::group(['prefix' => 'admin'], function () {
     Route::middleware(['auth'])->group(function () {
         Route::get('/', 'Admin\AdminController@index');
         Route::get('/profile', 'Admin\UserController@index')->name('profile');
         Route::post('/change-name', 'Admin\UserController@changeName')->name('change-name');
         Route::post('/change-email', 'Admin\UserController@changeEmail')->name('change-email');
+        Route::get('/article-management', 'Admin\ArticleManagementController@index')->name('article-management');
+        Route::get('/create-category', 'Admin\CategoryController@index')->name('create-category-view');
+        Route::post('/create-category', 'Admin\CategoryController@create')->name('create-category-add');
     });
 
     Route::get('/confirm-change-email/{token}', 'Admin\UserController@confirmChangeEmail');
-    
+
     Route::group(['namespace' => 'Auth'], function () {
         // Authentication Routes...
         Route::get('login', 'LoginController@showLoginForm')->name('login');

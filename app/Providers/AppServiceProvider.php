@@ -26,11 +26,18 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind(
             'App\Repositories\Contracts\ChangeEmailRepositoryInterface',
             'App\Repositories\Eloquent\ChangeEmailRepository'
+            
         );
 
         $this->app->bind(
             'App\Repositories\Contracts\UserRepositoryInterface',
             'App\Repositories\Eloquent\UserRepository'
+            
+        );
+        
+        $this->app->bind(
+            'App\Repositories\Contracts\CreateCategoryRepositoryInterface',
+            'App\Repositories\Eloquent\CategoryRepository'
         );
     }
 }
