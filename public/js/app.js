@@ -47381,7 +47381,7 @@ if (false) {
 /* 43 */
 /***/ (function(module, exports) {
 
-// removed by extract-text-webpack-plugin
+throw new Error("Module build failed: ModuleBuildError: Module build failed: \r\n@import \"~font-awesome/scss/font-awesome.scss\";\r\n^\r\n      File to import not found or unreadable: ~font-awesome/scss/font-awesome.scss.\r\n      in G:\\cslp\\resources\\assets\\sass\\app.scss (line 11, column 1)\n    at runLoaders (G:\\cslp\\node_modules\\webpack\\lib\\NormalModule.js:195:19)\n    at G:\\cslp\\node_modules\\loader-runner\\lib\\LoaderRunner.js:364:11\n    at G:\\cslp\\node_modules\\loader-runner\\lib\\LoaderRunner.js:230:18\n    at context.callback (G:\\cslp\\node_modules\\loader-runner\\lib\\LoaderRunner.js:111:13)\n    at Object.asyncSassJobQueue.push [as callback] (G:\\cslp\\node_modules\\sass-loader\\lib\\loader.js:55:13)\n    at Object.done [as callback] (G:\\cslp\\node_modules\\neo-async\\async.js:7974:18)\n    at options.error (G:\\cslp\\node_modules\\node-sass\\lib\\index.js:294:32)");
 
 /***/ })
 /******/ ]);

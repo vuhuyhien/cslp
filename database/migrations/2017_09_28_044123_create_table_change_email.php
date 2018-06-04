@@ -14,7 +14,7 @@ class CreateTableChangeEmail extends Migration
     public function up()
     {
         Schema::create('change_email', function (Blueprint $table) {
-            $table->string('user_id',50);
+            $table->integer('user_id')->unsign();
             $table->string('token',50);
             $table->boolean('is_expired')->default(0);
             $table->string('email');

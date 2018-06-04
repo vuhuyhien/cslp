@@ -1,16 +1,117 @@
 
 // Fonts
-@import url("https://fonts.googleapis.com/css?family=Raleway:300,400,600");
+// @import url("https://fonts.googleapis.com/css?family=Raleway:300,400,600");
+@import url("https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700");
 
 // Variables
 @import "variables";
 
 // Bootstrap
 @import '~bootstrap/scss/bootstrap';
+@import "~font-awesome/scss/font-awesome.scss";
+
+body {
+    font-family: 'Poppins', sans-serif;
+    background: #fafafa;
+}
+
+p {
+    font-family: 'Poppins', sans-serif;
+    font-size: 1.1em;
+    font-weight: 300;
+    line-height: 1.7em;
+    color: #999;
+}
+
+a, a:hover, a:focus {
+    color: inherit;
+    text-decoration: none;
+    transition: all 0.3s;
+}
+
+#sidebar {
+    /* don't forget to add all the previously mentioned styles here too */
+    background: #7386D5;
+    color: #fff;
+    transition: all 0.3s;
+}
+
+#sidebar .sidebar-header {
+    padding: 4px;
+    background: #6d7fcc;
+    text-align: center;
+}
+
+#sidebar ul.components {
+    padding: 20px 0;
+    border-bottom: 1px solid #47748b;
+}
+
+#sidebar ul p {
+    color: #fff;
+    padding: 10px;
+}
+
+#sidebar ul li a {
+    padding: 10px;
+    font-size: 1.1em;
+    display: block;
+}
+#sidebar ul li a:hover {
+    color: #7386D5;
+    background: #fff;
+}
 
 .navbar-laravel {
   background-color: #fff;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
+}
+
+.wrapper {
+    display: flex;
+    align-items: stretch;
+} 
+
+#sidebar {
+    min-width: 250px;
+    max-width: 250px;
+    flex: 1;
+    a[data-toggle="collapse"] {
+        position: relative;
+    }
+    a[aria-expanded="false"], a[aria-expanded="true"] {
+        &::before {
+            display: inline-block;
+            font: normal normal normal 14px/1 FontAwesome;
+            font-size: inherit;
+            text-rendering: auto;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            content: "\F107";
+            display: block;
+            position: absolute;
+            right: 20px;
+        }
+    }
+    
+    a[aria-expanded="true"]::before {
+        content: '\f106';
+    }
+
+    ul ul a {
+        font-size: 0.9em !important;
+        padding-left: 30px !important;
+        background: #6d7fcc;
+    }
+
+    ul li.active > a, a[aria-expanded="true"] {
+        color: #fff;
+        background: #6d7fcc;
+    }
+}
+
+#sidebar.active {
+    margin-left: -250px;
 }
 
 #avatar {
@@ -43,4 +144,13 @@
 }
 .invalid-feedback-name-category {
     color: red;
+}
+
+#content {
+    width: 100%;
+}
+
+.hidden {
+    position: absolute;
+    visibility: hidden;
 }

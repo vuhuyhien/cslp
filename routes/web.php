@@ -25,6 +25,9 @@ Route::group(['prefix' => 'admin'], function () {
         Route::get('/article-management', 'Admin\ArticleManagementController@index')->name('article-management');
         Route::get('/create-category', 'Admin\CategoryController@index')->name('create-category-view');
         Route::post('/create-category', 'Admin\CategoryController@create')->name('create-category-add');
+        Route::resources([
+            'posts' => 'Admin\PostController'
+        ]);
     });
 
     Route::get('/confirm-change-email/{token}', 'Admin\UserController@confirmChangeEmail');
