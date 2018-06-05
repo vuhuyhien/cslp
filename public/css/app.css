@@ -13626,7 +13626,63 @@ a:focus {
   position: absolute;
   visibility: hidden;
 }
-.table-category-iteam {
-  width: 20%;
+
+#posts-search {
+  margin-bottom: 24px;
+}
+
+#home {
+  margin-top: -1.5rem;
+  width: 100%;
+  max-width: 100%;
+  min-height: 100vh;
+  background-color: #eeeeee;
+  background-image: url(/images/bg.jpg?9332ab64050f2019391c2188e35341e3);
+  background-position: top left;
+  background-repeat: no-repeat;
+}
+
+#home .header {
+  text-align: center;
+  color: #fff;
+  padding-top: 150px;
+}
+
+#home .header h1 {
+  width: 100%;
+  display: block;
+}
+
+#home .header small {
+  width: 100%;
+  display: block;
+}
+
+#home article {
+  background: #fff;
+  display: block;
+  width: 1200px;
+  margin: 24px auto;
+  padding: 32px;
+}
+
+#home article h3 {
+  font-size: 28px;
+  font-weight: bold;
+}
+
+#home article .read-more {
+  text-align: right;
+  color: #7386D5;
+  font-weight: bold;
+}
+
+#home .form-search {
+  width: 100%;
+  text-align: center;
+}
+
+#home .form-search form {
+  display: inline-block;
 }
 

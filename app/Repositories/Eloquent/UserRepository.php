@@ -42,4 +42,14 @@ class UserRepository extends BaseRepository implements UserRepositoryInterface
             return false;
         }
     }
+
+    public function getAuthor()
+    {
+        $author = $this->model->first();
+        if($author) {
+            return $author->name;
+        }
+
+        return null;
+    }
 }

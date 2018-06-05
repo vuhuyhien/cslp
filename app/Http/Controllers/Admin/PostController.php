@@ -4,9 +4,17 @@ namespace App\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Repositories\Contracts\PostRepositoryInterface as Posts;
+use Log;
 
 class PostController extends Controller
 {
+    private $posts;
+
+    public function __construct(Posts $posts)
+    {
+        $this->posts = $posts;
+    }
     /**
      * Display a listing of the resource.
      *
@@ -14,7 +22,10 @@ class PostController extends Controller
      */
     public function index()
     {
-        //
+        $title = request()->get('title');
+        $posts = $this->posts->search($title);
+
+        return view('admin.post.index')->with("posts", $posts)->with('title', $title);
     }
 
     /**
@@ -35,8 +46,23 @@ class PostController extends Controller
      */
     public function store(\App\Http\Requests\CreatePost $request)
     {
-        //
-        dd($request->all());
+        $data = $request->all();
+        Log::info("create post with data: " . print_r($data, true));
+        if( $request->hasFile('image')) {
+            $data["image"] = $request->file('image')->store('image');
+        }
+
+        if($this->posts->create($data)) {
+            Log::info("create successful");
+            $request->session()->flash('status', 'Create post sucessful!');
+
+            return redirect()->route('posts.index');
+        } else {
+            Log::info("create fail");
+            $request->session()->flash('status', 'Create post fail!');
+
+            return redirect()->route('posts.create')->withInput();
+        }
     }
 
     /**
@@ -47,7 +73,7 @@ class PostController extends Controller
      */
     public function show($id)
     {
-        //
+        
     }
 
     /**
@@ -58,7 +84,12 @@ class PostController extends Controller
      */
     public function edit($id)
     {
-        //
+        $post = $this->posts->find($id);
+        if(!$post) {
+            abort(404);
+        }
+
+        return view('admin.post.edit')->with('post', $post);
     }
 
     /**
@@ -68,9 +99,35 @@ class PostController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(\App\Http\Requests\CreatePost $request, $id)
     {
-        //
+        $data = $request->only(
+            'title',
+            'image',
+            'intro',
+            'content',
+            'type'
+        );
+        Log::info("update post with data: " . print_r($data, true));
+        if( $request->hasFile('image')) {
+            $data["image"] = $request->file('image')->store('image');
+        }
+
+        if(!isset($data['type'])) {
+            $data['type'] = 0;
+        }
+
+        if($this->posts->update($data, $id)) {
+            Log::info("update successful");
+            $request->session()->flash('status', 'Update post sucessful!');
+
+            return redirect()->route('posts.index');
+        } else {
+            Log::info("update fail");
+            $request->session()->flash('status', 'Update post fail!');
+
+            return redirect()->route('posts.update')->withInput();
+        }
     }
 
     /**
@@ -81,6 +138,9 @@ class PostController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $this->posts->delete($id);
+        $request->session()->flash('status', 'Delete post sucessful!');
+
+        return redirect()->back();
     }
 }

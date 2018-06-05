@@ -155,3 +155,56 @@ a, a:hover, a:focus {
     position: absolute;
     visibility: hidden;
 }
+
+#posts-search {
+    margin-bottom: 24px;
+}
+
+// frontend
+#home {
+    margin-top: -1.5rem;
+    width: 100%;
+    max-width: 100%;
+    min-height: 100vh;
+    background-color: #eeeeee;
+    background-image: url('../image/bg.jpg');
+    background-position: top left;
+    background-repeat: no-repeat;
+    .header{
+        text-align: center;
+        color: #fff;
+        padding-top: 150px;
+        h1 {
+            width: 100%;
+            display: block;
+        }
+        small{
+            width: 100%;
+            display: block;
+        }
+    }
+
+    article {
+        background: #fff;
+        display: block;
+        width: 1200px;
+        margin: 24px auto;
+        padding: 32px;
+        h3 {
+            font-size: 28px;
+            font-weight: bold;
+        }
+        .read-more {
+            text-align: right;
+            color: #7386D5;
+            font-weight: bold;
+        }
+    }
+    .form-search {
+        width: 100%;
+        text-align: center;
+        form{
+            display: inline-block;
+        }
+    }
+}
