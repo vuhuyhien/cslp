@@ -4,6 +4,8 @@ namespace App\Repositories\Eloquent;
 
 use App\Models\Category;
 use App\Repositories\Contracts\CreateCategoryRepositoryInterface;
+use App\Repositories\Contracts\PostRepositoryInterface;
+use DB;
 
 class CategoryRepository extends BaseRepository implements CreateCategoryRepositoryInterface
 {
@@ -28,11 +30,29 @@ class CategoryRepository extends BaseRepository implements CreateCategoryReposit
 
     public function delete($id)
     {
-        return $this->model->where('alias', '!=', 'chua-phan-loại')->where('id', $id)->delete();
+        DB::beginTransaction();
+        try {
+            $this->model->where('alias', '!=', 'chua-phan-loại')->where('id', $id)->delete();
+            $post = resolve(PostRepositoryInterface::class);
+            $default = $this->getDefaultId();
+            $data = [
+                "category_id" => $default
+            ];
+            $post->updatePostAfterDeleteCategory($data, $id);
+            DB::commit();
+        } catch (Exception $e) {
+            DB::rollback();
+        }
+        
     }
 
-    // public function findName($name, $columns = array('*'))
-    // {
-    //     return $this->model->where('name', '=', $name)->get();
-    // }
+    public function findName($name, $columns = array('*')){
+        return $this->model->where('name','=',$name)->first();
+    }
+
+    public function getDefaultId()
+    {
+        return $this->findName(config('constants.CATEGORY_DEFAULT'))->id;
+    }
+
 }
