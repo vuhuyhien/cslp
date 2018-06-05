@@ -6,8 +6,6 @@ php:
     - 7.2
 env:
     - NODEJS_VERSION=8.x
-addons:
-    - mariadb: '10.2.8'
 
 before_install:
     - sudo rm -rf ~/.nvm - curl -sL "https://deb.nodesource.com/setup_${NODEJS_VERSION}" | sudo -E bash -
