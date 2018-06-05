@@ -22,7 +22,7 @@ before_script:
     - php artisan migrate
     - php artisan db:seed
     - php artisan storage:link
-    - yarn prod
+    - yarn dev
     - php artisan serve &
 
 script:
