@@ -16,6 +16,7 @@
                 <li><a href="{{route('posts.create')}}">Create</a></li>
             </ul>
         </li>
+
         <li><!-- Link with dropdown items -->
             <a href="#categorySubmenu" data-toggle="collapse" aria-expanded="false">Category</a>
             <ul class="collapse list-unstyled" id="categorySubmenu">

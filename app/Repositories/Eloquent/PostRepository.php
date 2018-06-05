@@ -2,25 +2,40 @@
 
 namespace App\Repositories\Eloquent;
 
-use App\Repositories\Contracts\PostRepositoryInterface;
 use App\Models\Post;
-use Log;
-use DB;
+use App\Repositories\Contracts\PostRepositoryInterface;
 
 class PostRepository extends BaseRepository implements PostRepositoryInterface
 {
-    public function model() {
+    public function model()
+    {
         return Post::class;
     }
 
-    public function search($title, $perPage = 20, $columns = array('*')) {
-        $title = trim($title);
-        if(empty($title)) {
-            return $this->model->paginate($perPage, $columns);
+    public function search($conditions, $perPage = 20, $columns = array('*'))
+    {
+        $result = $this->model->whereRaw('1=1');
+        foreach($conditions as $key => $condition) {
+            switch($key) {
+                case 'category':
+                    $result->where($key, $condition);
+                    break;
+                case 'title':
+                    $condition = trim($condition);
+                    $result->where($key, 'like',  '%' . $condition . '%');
+                    break;
+                default:
+                    $result->where($key, $condition);
+                    break;
+            }
         }
 
-        return $this->model
-                        ->where('title', $title)
-                        ->paginate($perPage, $columns);
+        return $result->paginate($perPage, $columns);
+    }
+
+
+    public function updatePostAfterDeleteCategory(array $data, $category_id, $attribute = "category_id")
+    {
+        return $this->model->where($attribute, '=', $category_id)->update($data);
     }
 }
