@@ -13613,12 +13613,20 @@ a:focus {
   color: white;
 }
 
+.invalid-feedback-name-category {
+  color: red;
+}
+
 #content {
   width: 100%;
+  min-height: 100vh;
 }
 
 .hidden {
   position: absolute;
   visibility: hidden;
+}
+.table-category-iteam {
+  width: 20%;
 }
 

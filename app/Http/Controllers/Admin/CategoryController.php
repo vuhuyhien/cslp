@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\CategoryRequest;
 use App\Repositories\Contracts\CreateCategoryRepositoryInterface as CreateCategoryRepository;
 use Illuminate\Http\Request;
+use Validator;
 
 class CategoryController extends Controller
 {
@@ -30,23 +31,18 @@ class CategoryController extends Controller
 
     public function index()
     {
-        return view('admin.category');
+        $categories = $this->categoryName->paginatetCategory();
+        return view('admin.category.listCategory', ['categories' => $categories]);
     }
 
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\create-category-add
      */
-    public function create(CategoryRequest $request)
+    public function create()
     {
-        $name = $request->name;
-        $alias = str_slug($name, "-");
-        $test = $this->categoryName->add($name, $alias);
-        if ($test) {
-            $request->session()->flash('status', 'create category sucessful!');
-            return redirect()->route('create-category-view');
-        }
+        return view('admin.category.createCategory');
     }
 
     /**
@@ -55,9 +51,18 @@ class CategoryController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(CategoryRequest $request)
     {
-        //
+        $name = $request->name;
+
+        $alias = str_slug($name, "-");
+        $description = $request->description;
+        // dd($description);
+        $data = $this->categoryName->add($name, $alias, $description);
+        if ($data) {
+            $request->session()->flash('status', 'create category sucessful!');
+            return redirect()->route('category.index');
+        }
     }
 
     /**
@@ -79,7 +84,8 @@ class CategoryController extends Controller
      */
     public function edit($id)
     {
-        //
+        $data = $this->categoryName->find($id);
+        return view('admin.category.updateCategory', ['categories' => $data]);
     }
 
     /**
@@ -91,7 +97,34 @@ class CategoryController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+
+        $category = $this->categoryName->find($id);
+       
+        if ($category->name == $request->name) {
+            $data = [
+                'description' => $request->description,
+            ];
+
+
+        } else {
+            $validator = Validator::make($request->all(), [
+                'name' => 'required|max:255|unique:category,name',
+            ]);
+            if ($validator->fails()) {
+                return redirect()->route('category.edit',$id)->with('errors', $validator->errors());
+            }
+            $data = [
+                'name' => $request->name,
+                'alias' => str_slug($request->name, "-"),
+                'description' => $request->description,
+            ];
+        }
+
+        $update = $this->categoryName->update($data, $id);
+        if ($update) {
+            $request->session()->flash('status', 'Update category sucessful!');
+            return redirect()->route('category.index');
+        }
     }
 
     /**
@@ -100,8 +133,20 @@ class CategoryController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy($request, $id)
     {
-        //
+
+    }
+
+    public function delete(Request $request)
+    {
+        $id = $request->route('id');
+        $categories = $this->categoryName->delete($id);
+        if ($categories) {
+            $request->session()->flash('status', 'Delete category sucessful! ');
+            return redirect()->back();
+        }
+        $request->session()->flash('status', 'category Chưa phân loại not delete');
+        return redirect()->route('category.index');
     }
 }

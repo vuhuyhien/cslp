@@ -23,10 +23,10 @@ Route::group(['prefix' => 'admin'], function () {
         Route::post('/change-name', 'Admin\UserController@changeName')->name('change-name');
         Route::post('/change-email', 'Admin\UserController@changeEmail')->name('change-email');
         Route::get('/article-management', 'Admin\ArticleManagementController@index')->name('article-management');
-        Route::get('/create-category', 'Admin\CategoryController@index')->name('create-category-view');
-        Route::post('/create-category', 'Admin\CategoryController@create')->name('create-category-add');
+        Route::get('/category/{id}/delete', 'Admin\CategoryController@delete')->name('category-delete');
         Route::resources([
-            'posts' => 'Admin\PostController'
+            'posts' => 'Admin\PostController',
+            'category' => 'Admin\CategoryController',
         ]);
     });
 
