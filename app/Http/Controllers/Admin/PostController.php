@@ -5,15 +5,18 @@ namespace App\Http\Controllers\Admin;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Repositories\Contracts\PostRepositoryInterface as Posts;
+use App\Repositories\Contracts\CategoryRepositoryInterface as Category;
 use Log;
 
 class PostController extends Controller
 {
     private $posts;
+    private $category;
 
-    public function __construct(Posts $posts)
+    public function __construct(Posts $posts, Category $category)
     {
         $this->posts = $posts;
+        $this->category = $category;
     }
     /**
      * Display a listing of the resource.
@@ -25,7 +28,9 @@ class PostController extends Controller
         $title = request()->get('title');
         $posts = $this->posts->search($title);
 
-        return view('admin.post.index')->with("posts", $posts)->with('title', $title);
+        return view('admin.post.index')
+                    ->with("posts", $posts)
+                    ->with('title', $title);
     }
 
     /**
@@ -35,7 +40,9 @@ class PostController extends Controller
      */
     public function create()
     {
-        return view('admin.post.create');
+        $categories = $this->category->all();
+
+        return view('admin.post.create')->with('categories', $categories);
     }
 
     /**
@@ -50,6 +57,10 @@ class PostController extends Controller
         Log::info("create post with data: " . print_r($data, true));
         if( $request->hasFile('image')) {
             $data["image"] = $request->file('image')->store('image');
+        }
+
+        if(!isset($data['category_id'])) {
+            $data['category_id'] = config('constants.CATEGORY_DEFAULT');
         }
 
         if($this->posts->create($data)) {
@@ -115,6 +126,10 @@ class PostController extends Controller
 
         if(!isset($data['type'])) {
             $data['type'] = 0;
+        }
+
+        if(!isset($data['category_id'])) {
+            $data['category_id'] = config('constants.CATEGORY_DEFAULT');
         }
 
         if($this->posts->update($data, $id)) {

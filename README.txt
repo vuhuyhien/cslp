@@ -1,3 +1,4 @@
+0. composer dump-autoload
 1. Tạo .env theo file .env.example
 2. php artisan key:generate
 3. docker-compose up -d

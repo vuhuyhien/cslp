@@ -2,7 +2,6 @@
 
 namespace App\Repositories\Contracts;
 
-interface CreateCategoryRepositoryInterface
+interface CategoryRepositoryInterface
 {
-
 }

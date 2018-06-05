@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\CategoryRequest;
-use App\Repositories\Contracts\CreateCategoryRepositoryInterface as CreateCategoryRepository;
+use App\Repositories\Contracts\CategoryRepositoryInterface as CreateCategoryRepository;
 use Illuminate\Http\Request;
 use Validator;
 
@@ -14,7 +14,7 @@ class CategoryController extends Controller
     /**
      * change email repository
      *
-     * @property CreateCategoryRepositoryInterface $categoryName
+     * @property CategoryRepositoryInterface $categoryName
      */
     private $categoryName;
 

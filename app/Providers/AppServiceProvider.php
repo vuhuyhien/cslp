@@ -41,7 +41,7 @@ class AppServiceProvider extends ServiceProvider
         );
         
         $this->app->bind(
-            'App\Repositories\Contracts\CreateCategoryRepositoryInterface',
+            'App\Repositories\Contracts\CategoryRepositoryInterface',
             'App\Repositories\Eloquent\CategoryRepository'
         );
     }

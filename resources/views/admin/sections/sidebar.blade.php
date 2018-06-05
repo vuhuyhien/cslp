@@ -17,10 +17,10 @@
             </ul>
         </li>
         <li><!-- Link with dropdown items -->
-            <a href="#homeSubmenu" data-toggle="collapseCategory" aria-expanded="false">Category</a>
-            <ul class="collapseCategory list-unstyled" id="homeSubmenu">
+            <a href="#categorySubmenu" data-toggle="collapse" aria-expanded="false">Category</a>
+            <ul class="collapse list-unstyled" id="categorySubmenu">
                 <li><a href="{{route('category.index')}}">List</a></li>
-            <li><a href="{{route('category.create')}}">Create</a></li>
+                <li><a href="{{route('category.create')}}">Create</a></li>
             </ul>
         </li>
     </ul>

@@ -26,6 +26,18 @@
                         <input value="{{old('title')}}" type="text" name="title" class="form-control" id="posts-title" placeholder="Enter title">
                     </div>
                     <div class="form-group">
+                        <label for="posts-category">Category</label>
+                        <select id="posts-category" class="form-control" name="category_id">
+                            @foreach($categories as $cate)
+                                <option 
+                                    @if($cate->name == config('constants.CATEGORY_DEFAULT')) selected  @endif 
+                                    value="{{$cate->id}}">
+                                    {{$cate->name}}
+                                </option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <div class="form-group">
                         <label for="posts-image">Image</label>
                         <input type="file" name="image" class="form-control" id="posts-image" placeholder="Enter title">
                     </div>
