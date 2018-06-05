@@ -27,4 +27,6 @@ class CategoryRequest extends FormRequest
             'name' => 'required|max:255|unique:category,name',
         ];
     }
+
+    
 }

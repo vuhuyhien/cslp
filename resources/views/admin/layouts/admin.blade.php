@@ -22,12 +22,8 @@
 </head>
 <body>
     <div id="app">
-        
-
         <div class="wrapper">
-
             @include('admin.sections.sidebar')
-            </nav>
             <div id="content">
                 @include('admin.sections.header')
                 <!-- Page Content -->
