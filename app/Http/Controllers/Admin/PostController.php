@@ -25,12 +25,18 @@ class PostController extends Controller
      */
     public function index()
     {
-        $title = request()->get('title');
-        $posts = $this->posts->search($title);
+        $data = request()->only('title', 'category_id');
+        if(!isset($data['category_id'])){
+            unset($data['category_id']);
+        }
+        
+        $posts = $this->posts->search($data);
+        $categories = $this->category->all();
 
         return view('admin.post.index')
                     ->with("posts", $posts)
-                    ->with('title', $title);
+                    ->with('title', $data)
+                    ->with('categories', $categories);
     }
 
     /**
@@ -60,7 +66,8 @@ class PostController extends Controller
         }
 
         if(!isset($data['category_id'])) {
-            $data['category_id'] = config('constants.CATEGORY_DEFAULT');
+
+            $data['category_id'] = $this->category->getDefaultId();
         }
 
         if($this->posts->create($data)) {
@@ -100,7 +107,9 @@ class PostController extends Controller
             abort(404);
         }
 
-        return view('admin.post.edit')->with('post', $post);
+        $categories = $this->category->all();
+        
+        return view('admin.post.edit')->with('post', $post)->with('categories', $categories);
     }
 
     /**
@@ -117,7 +126,8 @@ class PostController extends Controller
             'image',
             'intro',
             'content',
-            'type'
+            'type',
+            'category_id'
         );
         Log::info("update post with data: " . print_r($data, true));
         if( $request->hasFile('image')) {
@@ -129,7 +139,7 @@ class PostController extends Controller
         }
 
         if(!isset($data['category_id'])) {
-            $data['category_id'] = config('constants.CATEGORY_DEFAULT');
+            $data['category_id'] = $this->category->getDefaultId();
         }
 
         if($this->posts->update($data, $id)) {

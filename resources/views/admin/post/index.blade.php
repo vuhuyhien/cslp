@@ -13,7 +13,19 @@
                 @endif
                 <div class="row">
                     <form  class="form-inline" id="posts-search" action="" method="GET">
-                        <input name="title" value="{{$title}}" class="form-control" placeholder="Search by title" type="text" />
+                        <input name="title" value="{{ isset($title['title']) ? $title['title'] : '' }}" class="form-control" placeholder="Search by title" type="text" />
+                        <select id="posts-category" class="form-control" name="category_id">
+                            <option 
+                                value="">
+                                -- Select category --
+                            </option>
+                            @foreach($categories as $cate)
+                                <option 
+                                    value="{{$cate->id}}">
+                                    {{$cate->name}}
+                                </option>
+                            @endforeach
+                        </select>
                         <input class="btn btn-primary" type="submit" value="Search" />
                     </form>
                 </div>
@@ -24,6 +36,7 @@
                         <th scope="col">Image</th>
                         <th scope="col">Title</th>
                         <th scope="col">Type</th>
+                        <th scope="col">Category</th>
                         <th scope="col">Created at</th>
                         <th scope="col">Updated at</th>
                         <th scope="col">Action</th>
@@ -36,6 +49,7 @@
                             <td><img src="{{asset('storage')}}/{{$post->image}}" width="30" /></td>
                             <td>{{$post->title}}</td>
                             <td>{{$post->type ? 'public' : 'draft'}}</td>
+                            <td>{{$post->category->name}}</td>
                             <td>{{$post->created_at}}</td>
                             <td>{{$post->updated_at}}</td>
                             <td>

@@ -32,6 +32,7 @@ class CategoryController extends Controller
     public function index()
     {
         $categories = $this->categoryName->paginatetCategory();
+
         return view('admin.category.listCategory', ['categories' => $categories]);
     }
 
@@ -57,10 +58,10 @@ class CategoryController extends Controller
 
         $alias = str_slug($name, "-");
         $description = $request->description;
-        // dd($description);
         $data = $this->categoryName->add($name, $alias, $description);
         if ($data) {
             $request->session()->flash('status', 'create category sucessful!');
+
             return redirect()->route('category.index');
         }
     }
@@ -85,6 +86,7 @@ class CategoryController extends Controller
     public function edit($id)
     {
         $data = $this->categoryName->find($id);
+
         return view('admin.category.updateCategory', ['categories' => $data]);
     }
 
@@ -104,15 +106,15 @@ class CategoryController extends Controller
             $data = [
                 'description' => $request->description,
             ];
-
-
         } else {
             $validator = Validator::make($request->all(), [
                 'name' => 'required|max:255|unique:category,name',
             ]);
             if ($validator->fails()) {
-                return redirect()->route('category.edit',$id)->with('errors', $validator->errors());
+
+                return redirect()->route('category.edit',$id)->with('errors', $validator->errors())->withInput();
             }
+
             $data = [
                 'name' => $request->name,
                 'alias' => str_slug($request->name, "-"),
@@ -123,6 +125,7 @@ class CategoryController extends Controller
         $update = $this->categoryName->update($data, $id);
         if ($update) {
             $request->session()->flash('status', 'Update category sucessful!');
+
             return redirect()->route('category.index');
         }
     }
@@ -144,9 +147,12 @@ class CategoryController extends Controller
         $categories = $this->categoryName->delete($id);
         if ($categories) {
             $request->session()->flash('status', 'Delete category sucessful! ');
+
             return redirect()->back();
         }
+        
         $request->session()->flash('status', 'category Chưa phân loại not delete');
+
         return redirect()->route('category.index');
     }
 }

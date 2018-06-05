@@ -16,7 +16,7 @@
             <div class="form-group row">
                     <label for="inputEmail3" class="col-sm-2 col-form-label">Name: </label>
                     <div class="col-sm-10">
-                    <input type="text" name="name" class="form-control" id="inputEmail3" value="{{ $categories->name }}" placeholder="Name">
+                    <input type="text" name="name" class="form-control" id="inputEmail3" value="{{ old('name') ? old('name') : $categories->name }}" placeholder="Name">
                         @if($errors->has('name'))
                                 <div class="invalid-feedback-name-category">
                                 {{$errors->first('name')}}
@@ -28,7 +28,7 @@
             <div class="form-group row">
                     <label for="inputEmail3" class="col-sm-2 col-form-label">Description: </label>
                     <div class="col-sm-10">
-                    <textarea class="form-control" name="description" cols="50" rows="10" id="description">{{ $categories->description }}</textarea>
+                    <textarea class="form-control" name="description" cols="50" rows="10" id="description">{{ old('description') ? old('description') : $categories->description }}</textarea>
                 </div>
 
             </div>

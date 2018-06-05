@@ -20,4 +20,9 @@ class Post extends Model
         'category_id',
         'title'
     ];
+
+    public function category()
+    {
+        return $this->belongsTo('App\Models\Category', 'category_id');
+    }
 }

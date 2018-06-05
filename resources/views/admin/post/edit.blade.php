@@ -26,6 +26,25 @@
                         <label for="posts-title">Title</label>
                         <input value="{{old('title') ? old('title') : $post->title }}" type="text" name="title" class="form-control" id="posts-title" placeholder="Enter title">
                     </div>
+                    <div class="form-group">
+                        <label for="posts-category">Category</label>
+                        <select id="posts-category" class="form-control" name="category_id">
+                            @foreach($categories as $cate)
+                                @if($cate->id == $post->category_id || $cate->id == old('category_id')) 
+                                    <option 
+                                        selected
+                                        value="{{$cate->id}}">
+                                        {{$cate->name}}
+                                    </option>
+                                @else
+                                    <option 
+                                        value="{{$cate->id}}">
+                                        {{$cate->name}}
+                                    </option>
+                                @endif 
+                            @endforeach
+                        </select>
+                    </div>
                     <div class="form-group row">
                         <div class="col-6">
                             <label for="posts-image">Image</label>
