@@ -139,6 +139,7 @@ class PostController extends Controller
     public function destroy($id)
     {
         $this->posts->delete($id);
+        $request->session()->flash('status', 'Delete post sucessful!');
 
         return redirect()->back();
     }

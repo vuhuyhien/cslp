@@ -8,6 +8,9 @@
                 Posts
             </div>
             <div class="card-body">
+                @if (session('status'))
+                    <div class="alert alert-info">{{session('status')}}</div>
+                @endif
                 <div class="row">
                     <form  class="form-inline" id="posts-search" action="" method="GET">
                         <input name="title" value="{{$title}}" class="form-control" placeholder="Search by title" type="text" />

@@ -1,23 +1,32 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card">
-                <div class="card-header">Dashboard</div>
-
-                <div class="card-body">
-                    @if (session('status'))
-                        <div class="alert alert-success">
-                            {{ session('status') }}
-                        </div>
-                    @endif
-
-                    You are logged in!
-                </div>
-            </div>
+<div class="container" id="home">
+    <div class="row header">
+        <h1>{{$author}}</h1>
+        <small>Just do it!</small>
+        <div class="form-search">
+            <form class="form-inline" method="GET" action="{{route('home')}}">
+                @csrf
+                <input class="form-control" name="title" placeholder="Search title" value="{{$title}}"/>
+                <input type="submit" class="btn btn-primary" value="search" />
+            </form>
         </div>
+    </div>
+    <div class="row article">
+        @foreach($posts as $post)
+            <article>
+                <h3>{{$post->title}}</h3>
+                <div>{{$post->created_at}}</div>
+                <div>{!!$post->intro!!}</div>
+                <div class="read-more">
+                    <a href="{{route('view-post', $post->id)}}">READ MORE</a>
+                </div>
+            </article>
+        @endforeach
+    </div>
+    <div class="row">
+        {{$posts ? $posts->links() : ''}}
     </div>
 </div>
 @endsection
