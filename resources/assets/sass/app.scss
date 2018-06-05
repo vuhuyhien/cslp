@@ -145,9 +145,14 @@ a, a:hover, a:focus {
 
 #content {
     width: 100%;
+    min-height: 100vh;
 }
 
 .hidden {
     position: absolute;
     visibility: hidden;
+}
+
+#posts-search {
+    margin-bottom: 24px;
 }

@@ -17,21 +17,27 @@
                         </ul>
                     </div>
                 @endif
-                <form id="create-post-form" action="{{route('posts.store')}}" method="POST" enctype="multipart/form-data">
+                <form id="create-post-form" action="{{route('posts.update', $post->id)}}" method="POST" enctype="multipart/form-data">
                     @csrf
-                    <textarea id="posts-intro" name="intro" class="hidden">{!!old('intro')!!}</textarea>
-                    <textarea id="posts-content" name="content" class="hidden">{!!old('content')!!}</textarea>
+                    {{method_field('PUT')}}
+                    <textarea id="posts-intro" name="intro" class="hidden">{!!old('intro') ? old('intro') : $post->intro!!}</textarea>
+                    <textarea id="posts-content" name="content" class="hidden">{!!old('content') ? old('content') : $post->content!!}</textarea>
                     <div class="form-group">
                         <label for="posts-title">Title</label>
-                        <input value="{{old('title')}}" type="text" name="title" class="form-control" id="posts-title" placeholder="Enter title">
+                        <input value="{{old('title') ? old('title') : $post->title }}" type="text" name="title" class="form-control" id="posts-title" placeholder="Enter title">
                     </div>
-                    <div class="form-group">
-                        <label for="posts-image">Image</label>
-                        <input type="file" name="image" class="form-control" id="posts-image" placeholder="Enter title">
+                    <div class="form-group row">
+                        <div class="col-6">
+                            <label for="posts-image">Image</label>
+                            <input type="file" name="image" class="form-control" id="posts-image" placeholder="Enter title">
+                        </div>
+                        <div class="col-6">
+                            <img src="{{asset('storage')}}/{{$post->image}}" width="100"/>
+                        </div>
                     </div>
                     <div class="form-group">
                         <label for="posts-public">Is Public ?</label>
-                        @if(old('type') == 1)
+                        @if(old('type') == 1 || $post->type == 1)
                             <input checked type="checkbox" name="type" id="posts-public" value="1">
                         @else
                             <input type="checkbox" name="type" id="posts-public" value="1">
@@ -39,11 +45,11 @@
                     </div>
                     <div class="form-group">
                         <label>Intro</label>
-                        <div class="intro">{!!old('intro')!!}</div>
+                        <div class="intro">{!!old('intro') ? old('intro') : $post->intro!!}</div>
                     </div>
                     <div class="form-group">
                         <label>Content</label>
-                        <div class="content">{!!old('content')!!}</div>
+                        <div class="content">{!!old('content') ? old('content') : $post->content!!}</div>
                     </div>
                     
                     <button type="submit" id="posts-create-submit" class="btn btn-primary">{{__('Save')}}</button>

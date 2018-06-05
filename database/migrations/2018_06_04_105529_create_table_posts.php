@@ -17,7 +17,7 @@ class CreateTablePosts extends Migration
             $table->increments('id');
             $table->longtext("content")->nullable();
             $table->text('title')->nullable();
-            $table->text('intro')->nullable();
+            $table->longtext('intro')->nullable();
             $table->boolean('type')->nullable()->default(0)->comment("0: draft , 1: public");
             $table->integer('category_id')->nullable();
             $table->text('image')->nullable();
