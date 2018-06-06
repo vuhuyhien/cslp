@@ -42,14 +42,15 @@ class PostTest extends DuskTestCase
                     ->keys("@content", $this->faker->paragraph())
                     ->click("@submit")
                     ->assertPathIs('/admin/posts')
-                    ->assertSee($title);
+                    ->assertSee($title)
+                    ->logout();
         });
     }
 
 
     /**
      *
-     * @group post
+     * @group post-create-fail
      * @return void
      */
     public function testCreatePostFail()
@@ -61,7 +62,8 @@ class PostTest extends DuskTestCase
                     ->assertPathIs('/admin/posts/create')
                     ->assertSee('The title field is required.')
                     ->assertSee('The intro field is required.')
-                    ->assertSee('The content field is required.');
+                    ->assertSee('The content field is required.')
+                    ->logout();
         });
     }
 
@@ -87,14 +89,15 @@ class PostTest extends DuskTestCase
                     ->click("@submit")
                     ->assertPathIs('/admin/posts')
                     ->assertSee($title)
-                    ->assertSee('draft');
+                    ->assertSee('draft')
+                    ->logout();
         });
     }
 
     
     /**
      *
-     * @group edit-post
+     * @group edit-post-fail
      * @return void
      */
     public function testUpdatePostFailValidate()
@@ -112,7 +115,8 @@ class PostTest extends DuskTestCase
                     ->assertPathIs('/admin/posts/' . $post->id . '/edit')
                     ->assertSee('The title field is required.')
                     ->assertSee('The intro field is required.')
-                    ->assertSee('The content field is required.');
+                    ->assertSee('The content field is required.')
+                    ->logout();
         });
     }
 
@@ -130,7 +134,8 @@ class PostTest extends DuskTestCase
                     ->assertSee($posts[19]->title)
                     ->visit("/admin/posts?page=2")
                     ->assertSee($posts[20]->title)
-                    ->assertSee($posts[21]->title);
+                    ->assertSee($posts[21]->title)
+                    ->logout();
         });
     }
 
@@ -145,7 +150,8 @@ class PostTest extends DuskTestCase
             $browser->loginAs($this->user)
                     ->visit("/admin/posts?title=" . urlencode($posts[0]->title))
                     ->assertSee($posts[0]->title)
-                    ->assertDontSee($posts[19]->title);
+                    ->assertDontSee($posts[19]->title)
+                    ->logout();
         });
     }
 
@@ -161,7 +167,8 @@ class PostTest extends DuskTestCase
                     ->visit("/admin/posts")
                     ->press("Delete")
                     ->assertPathIs("/admin/posts")
-                    ->assertDontSee($post->title);
+                    ->assertDontSee($post->title)
+                    ->logout();
         });
     }
 }
