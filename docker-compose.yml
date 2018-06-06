@@ -1,15 +1,63 @@
 version: '3'
 services:
-    db:
-        image: mariadb:10.2.8
-        ports:
-            - "3306:3306"
-        volumes:
-            - db-data:/var/lib/mysql
-        environment:
-            MYSQL_ROOT_PASSWORD: root
-            MYSQL_DATABASE: blog_cg
-            MYSQL_USER: blog_cg
-            MYSQL_PASSWORD: blog_cg                
+  web:
+    build: nginx/
+    volumes:
+      - ./www:/var/www
+    ports:
+      - ${HTTP_FORWARD_PORT}:80
+      - ${HTTPS_FORWARD_PORT}:443
+    environment:
+      - NGINX_HOST=${NGINX_HOST}
+    command: /bin/sh -c "envsubst '$$NGINX_HOST' < /etc/nginx/conf.d/default.template > /etc/nginx/conf.d/default.conf && nginx -g 'daemon off;'"
+    restart: always
+    depends_on:
+      - php
+      - mariadb
+      - redis
+
+  php:
+    build: php/
+    restart: always
+    volumes:
+      - ./www:/var/www
+
+  laravel_init:
+    build: laravel_init/
+    volumes:
+      - ./www:/var/www
+    env_file: .env
+    depends_on:
+      - mariadb
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    ports:
+      - ${PHPMYADMIN_FORWARD_PORT}:80
+    environment:
+      - PMA_ARBITRARY=1
+      - PMA_HOST=${MYSQL_HOST}
+    restart: always
+    depends_on:
+        - mariadb
+
+  mariadb:
+    image: mariadb:10.2.8
+    container_name: ${MYSQL_HOST}
+    restart: always
+    ports:
+      - ${MYSQL_PORT}:3306
+    volumes:
+      - db-data:/var/lib/mysql
+    environment:
+      - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
+      - MYSQL_DATABASE=${MYSQL_DATABASE}
+      - MYSQL_USER=${MYSQL_USER}
+      - MYSQL_PASSWORD=${MYSQL_PASSWORD}
+
+  redis:
+    image: redis:alpine
+    restart: always
+
 volumes:
     db-data:

@@ -3,34 +3,36 @@ dist: trusty
 
 language: php
 php:
-    - 7.2
+  - 7.2
 env:
-    - NODEJS_VERSION=8.x
+  - NODEJS_VERSION=8.x
 
 addons:
-   chrome: stable
+  chrome: stable
 
 before_install:
-    - sudo rm -rf ~/.nvm - curl -sL "https://deb.nodesource.com/setup_${NODEJS_VERSION}" | sudo -E bash -
-    - sudo apt-get install -y nodejs
+  - sudo rm -rf ~/.nvm - curl -sL "https://deb.nodesource.com/setup_${NODEJS_VERSION}" | sudo -E bash -
+  - sudo apt-get install -y nodejs
 
 install:
-    - cp .env.travis .env
-    - travis_retry composer install --no-interaction --prefer-dist --no-suggest
-    - yarn install
+  - cp .env.travis .env
+  - travis_retry composer install --no-interaction --prefer-dist --no-suggest
+  - yarn install
 
 before_script:
-    - google-chrome-stable --headless --disable-gpu --remote-debugging-port=9222 http://localhost &
-    - mysql -e 'create database homestead;'
-    - php artisan key:generate
-    - php artisan migrate
-    - php artisan db:seed
-    - php artisan storage:link
-    - php artisan serve &
+  - google-chrome-stable --headless --disable-gpu --remote-debugging-port=9222 http://localhost &
+  - cd www
+  - mysql -e 'create database homestead;'
+  - php artisan key:generate
+  - php artisan migrate
+  - php artisan db:seed
+  - php artisan storage:link
+  - php artisan serve &
 
 script:
-    - vendor/phpunit/phpunit/phpunit
-    - php artisan dusk
+  - cd www
+  - vendor/phpunit/phpunit/phpunit
+  - php artisan dusk
 
 after_failure:
-- php artisan email:failure
+  - php artisan email:failure
