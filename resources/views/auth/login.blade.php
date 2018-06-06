@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('admin.layouts.auth')
 
 @section('content')
 <div class="container">
@@ -8,7 +8,7 @@
                 <div class="card-header">{{ __('Login') }}</div>
 
                 <div class="card-body">
-                    <form method="POST" action="{{ route('login') }}">
+                    <form method="POST" action="{{ route('login') }}" {{Utils::disableValidateIfTesting()}}>
                         @csrf
 
                         <div class="form-group row">
@@ -59,6 +59,12 @@
                                     {{ __('Forgot Your Password?') }}
                                 </a>
                             </div>
+                        </div>
+
+                        <div class="form-group row mb-0">
+                            <a class="btn btn-link" href="{{ route('register') }}">
+                                {{ __('Don\'t have account? Register!') }}
+                            </a>
                         </div>
                     </form>
                 </div>
