@@ -7,6 +7,9 @@ php:
 env:
     - NODEJS_VERSION=8.x
 
+addons:
+   chrome: stable
+
 before_install:
     - sudo rm -rf ~/.nvm - curl -sL "https://deb.nodesource.com/setup_${NODEJS_VERSION}" | sudo -E bash -
     - sudo apt-get install -y nodejs
@@ -26,3 +29,4 @@ before_script:
 
 script:
     - vendor/phpunit/phpunit/phpunit
+    - php artisan dusk
