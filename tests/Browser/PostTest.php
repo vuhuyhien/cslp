@@ -63,6 +63,7 @@ class PostTest extends DuskTestCase
                     ->assertSee('The title field is required.')
                     ->assertSee('The intro field is required.')
                     ->assertSee('The content field is required.')
+                    ->dump()
                     ->logout();
         });
     }
@@ -116,6 +117,7 @@ class PostTest extends DuskTestCase
                     ->assertSee('The title field is required.')
                     ->assertSee('The intro field is required.')
                     ->assertSee('The content field is required.')
+                    ->dump()
                     ->logout();
         });
     }
