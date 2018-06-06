@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\CategoryRequest;
-use App\Repositories\Contracts\CategoryRepositoryInterface as CreateCategoryRepository;
+use App\Repositories\Contracts\CategoryRepositoryInterface as CategoryRepository;
 use Illuminate\Http\Request;
 use Validator;
 
@@ -18,7 +18,7 @@ class CategoryController extends Controller
      */
     private $categoryName;
 
-    public function __construct(CreateCategoryRepository $name)
+    public function __construct(CategoryRepository $name)
     {
         $this->categoryName = $name;
     }

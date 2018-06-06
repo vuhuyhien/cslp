@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Repositories\Contracts\CreateCategoryRepositoryInterface as Category;
+use App\Repositories\Contracts\CategoryRepositoryInterface as Category;
 use App\Repositories\Contracts\PostRepositoryInterface as Post;
 use Illuminate\Http\Request;
 
