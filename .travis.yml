@@ -5,13 +5,13 @@ language: php
 php:
   - 7.2
 env:
-  - TRAVIS_BUILD_DIR=www
   - NODEJS_VERSION=8.x
 
 addons:
   chrome: stable
 
 before_install:
+  - cd www/
   - sudo rm -rf ~/.nvm - curl -sL "https://deb.nodesource.com/setup_${NODEJS_VERSION}" | sudo -E bash -
   - sudo apt-get install -y nodejs
 
@@ -22,6 +22,7 @@ install:
 
 before_script:
   - google-chrome-stable --headless --disable-gpu --remote-debugging-port=9222 http://localhost &
+  - cd www/
   - mysql -e 'create database homestead;'
   - php artisan key:generate
   - php artisan migrate
@@ -30,7 +31,6 @@ before_script:
   - php artisan serve &
 
 script:
-  - cd www
   - vendor/phpunit/phpunit/phpunit
   - php artisan dusk
 
