@@ -31,3 +31,6 @@ before_script:
 script:
     - vendor/phpunit/phpunit/phpunit
     - php artisan dusk
+
+after_failure:
+- php artisan email:failure
