@@ -16,7 +16,7 @@ before_install:
 
 install:
     - cp .env.travis .env
-    - composer install
+    - travis_retry composer install --no-interaction --prefer-dist --no-suggest
     - yarn install
 
 before_script:
