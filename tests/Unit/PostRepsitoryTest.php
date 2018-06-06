@@ -8,6 +8,10 @@ use Illuminate\Foundation\Testing\DatabaseTransactions;
 
 class PostRepsitoryTest extends TestCase
 {
+    public function setUp()
+    {
+        $this->post = resolve(App\Repositories\Contracts\PostRepositoryInterface::class);
+    }
     /**
      * A basic test example.
      *

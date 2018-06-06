@@ -29,7 +29,7 @@
       <td  class="table-category-iteam">{{ $category->description }}</td>
       <td  class="table-category-iteam">
         <a href="{{route('category.edit', $category->id)}}" class="btn btn-primary" role="button" aria-pressed="true">Edit</a>
-        <a href="{{route('category-delete',$category->id)}}" class="btn btn-danger" role="button" aria-pressed="true">Delete</a>
+        <a id="delete-{{$category->id}}" href="{{route('category-delete',$category->id)}}" class="btn btn-danger" role="button" aria-pressed="true">Delete</a>
       </td>
     </tr>
     @endforeach

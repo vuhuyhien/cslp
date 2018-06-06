@@ -8,7 +8,7 @@
                 <div class="card-header">{{ __('Login') }}</div>
 
                 <div class="card-body">
-                    <form method="POST" action="{{ route('login') }}" {{Utils::disableValidateIfTesting()}}>
+                    <form method="POST" action="{{ route('login') }}" {{Utils::novalidate()}}>
                         @csrf
 
                         <div class="form-group row">

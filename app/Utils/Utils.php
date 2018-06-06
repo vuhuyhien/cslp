@@ -40,4 +40,13 @@ final class Utils
         
         return $url;
     }
+
+    public static function novalidate()
+    {
+        if (env('APP_ENV') == 'local' || env('APP_ENV') == 'testing') {
+            echo 'novalidate';
+        } else {
+            return;
+        }
+    }
 }
