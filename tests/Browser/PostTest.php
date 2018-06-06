@@ -58,8 +58,10 @@ class PostTest extends DuskTestCase
         $this->browse(function (Browser $browser) {
             $browser->loginAs($this->user)
                     ->visit(new CreatePost)
+                    ->pause(500)
                     ->click("@submit")
                     ->assertPathIs('/admin/posts/create')
+                    ->pause(500)
                     ->assertSee('The title field is required.')
                     ->assertSee('The intro field is required.')
                     ->assertSee('The content field is required.')
@@ -111,13 +113,14 @@ class PostTest extends DuskTestCase
                     ->visit(new EditPost($post))
                     ->clear("@title")
                     ->keys("@intro", ['{control}', 'a'], '{delete}')
+                    ->pause(500)
                     ->keys("@content", ['{control}', 'a'], '{delete}')
+                    ->pause(500)
                     ->click("@submit")
                     ->assertPathIs('/admin/posts/' . $post->id . '/edit')
                     ->assertSee('The title field is required.')
                     ->assertSee('The intro field is required.')
                     ->assertSee('The content field is required.')
-                    ->dump()
                     ->logout();
         });
     }
