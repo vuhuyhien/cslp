@@ -1,4 +1,4 @@
-#CODEGYM's Laravel Project Sample [![Build Status](https://travis-ci.org/vuhuyhien/cslp.svg?branch=master)](https://travis-ci.org/vuhuyhien/cslp) 
+# CODEGYM's Laravel Project Sample [![Build Status](https://travis-ci.org/vuhuyhien/cslp.svg?branch=master)](https://travis-ci.org/vuhuyhien/cslp) 
 
 If you want running project manually, please read [here](www/README.md) 
 
