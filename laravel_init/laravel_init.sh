@@ -10,7 +10,6 @@ chmod +x composer
 #replace env file
 envsubst < .env.example > .env
 
-#
 php composer update
 php composer dump-autoload
 php artisan key:generate
@@ -19,3 +18,4 @@ php artisan config:cache
 php artisan storage:link
 php artisan migrate:fresh
 php artisan db:seed
+php artisan db:seed --class=PostFakerTableSeeder
