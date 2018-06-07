@@ -3,7 +3,7 @@
 @section('content')
 <div class="container" id="home">
     <div class="row header">
-        <h1><a href="{{route('home')}}">{{$author}}</a></h1>
+        <h1><a href="{{route('home')}}">{{$author->name}}</a></h1>
         <small>Just do it!</small>
         <div class="form-search">
             <form class="form-inline" method="GET" action="{{route('home')}}">
@@ -28,11 +28,11 @@
                     <small>Author</small>
                     <div class="author">
                         <div class="info">
-                            <p>{{Auth::user()->name}}</p>
-                            <p><a href="mailto:{{Auth::user()->email}}">{{Auth::user()->email}}</a></p>
+                            <p>{{$author->name}}</p>
+                            <p><a href="mailto:{{$author->email}}">{{$author->email}}</a></p>
                         </div>
                         <div class="avt">
-                            <img src="{{Utils::get_gravatar(Auth::user()->email, 90, 'retro')}}" />
+                            <img src="{{Utils::get_gravatar($author->email, 90, 'retro')}}" />
                         </div>
                     </div>
                 </div>

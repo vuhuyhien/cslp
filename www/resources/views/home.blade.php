@@ -3,7 +3,7 @@
 @section('content')
 <div class="container" id="home">
     <div class="row header">
-        <h1>{{$author}}</h1>
+        <h1>{{$author->name}}</h1>
         <small>Just do it!</small>
         <div class="form-search">
             <form class="form-inline" method="GET" action="{{route('home')}}">

@@ -41,7 +41,11 @@ class HomeTest extends DuskTestCase
      */
     public function testViewSinglePost()
     {
-        $posts = factory(\App\Models\Post::class, 22)->create();
+        $posts = factory(\App\Models\Post::class, 22)->create(
+            [
+                "type" => 1
+            ]
+        );
         $this->browse(function (Browser $browser) use ($posts) {
             $title = $this->faker->sentence();
             $browser->visit("/view/" . $posts[0]->id)
