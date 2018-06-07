@@ -14,15 +14,19 @@ use Faker\Generator as Faker;
 */
 
 $factory->define(App\Models\Post::class, function (Faker $faker) {
-    $name = $faker->sentence();
-    $category = factory(App\Models\Category::class)->create([
-        'name' => $name,
-        'alias' => str_slug($name)
-    ]);
+    $randomCategory = App\Models\Category::inRandomOrder()->first();
+    $count = App\Models\Category::count();
+    if(!$randomCategory || $count < 5) {
+        $name = $faker->sentence(2);
+        $randomCategory = factory(App\Models\Category::class)->create([
+            'name' => $name,
+            'alias' => str_slug($name)
+        ]);    
+    }
     
     return [
         "title" => $faker->sentence(),
-        "category_id" => $category->id,
+        "category_id" => $randomCategory->id,
         "image" => $faker->imageUrl(),
         "type" => 1,
         "intro" => $faker->paragraph(),
