@@ -30,7 +30,7 @@ class PostRepository extends BaseRepository implements PostRepositoryInterface
             }
         }
 
-        return $result->paginate($perPage, $columns);
+        return $result->orderBy('created_at', 'desc')->paginate($perPage, $columns);
     }
 
 

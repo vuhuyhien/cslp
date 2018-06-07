@@ -51,6 +51,7 @@ class HomeController extends Controller
             ];
         }
 
+        $data['type'] = 1;
         $user = resolve('App\Repositories\Contracts\UserRepositoryInterface');
         $author = $user->getAuthor();
         $posts = $this->post->search($data);
