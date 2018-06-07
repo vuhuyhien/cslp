@@ -14,7 +14,11 @@ use Faker\Generator as Faker;
 */
 
 $factory->define(App\Models\Post::class, function (Faker $faker) {
-    $category = factory(App\Models\Category::class)->create();
+    $name = $faker->sentence();
+    $category = factory(App\Models\Category::class)->create([
+        'name' => $name,
+        'alias' => str_slug($name)
+    ]);
     
     return [
         "title" => $faker->sentence(),

@@ -28,6 +28,7 @@ class RegisterTest extends DuskTestCase
                     ->type('@password_confirmation', 'secret')
                     ->press('Register')
                     ->assertPathIs('/admin')
+                    ->screenshot("testRegisterSuccess")
                     ->logout();
         });
     }
@@ -42,7 +43,8 @@ class RegisterTest extends DuskTestCase
                     ->press('Register')
                     ->assertSee('The name field is required.')
                     ->assertSee('The email field is required.')
-                    ->assertSee('The password field is required.');
+                    ->assertSee('The password field is required.')
+                    ->screenshot("testRegisterFailValidateBlank");
         });
     }
 
@@ -61,7 +63,8 @@ class RegisterTest extends DuskTestCase
                     ->type('@password_confirmation', 'secret123')
                     ->press('Register')
                     ->assertSee('The password confirmation does not match.')
-                    ->assertSee('The email must be a valid email address.');
+                    ->assertSee('The email must be a valid email address.')
+                    ->screenshot("testRegisterFailValidatePasswordConfirmationAndEmailFormat");
         });
     }
 }

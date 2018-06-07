@@ -17,7 +17,6 @@ class CategoryTest extends DuskTestCase
     protected function setUp()
     {
         parent::setUp();
-        $this->artisan('db:seed');
         $this->user = factory(\App\Models\User::class)->create();
     }
     /**
@@ -38,7 +37,8 @@ class CategoryTest extends DuskTestCase
                     ->assertPathIs('/admin/category')
                     ->assertSee($name)
                     ->assertSee(str_slug($name))
-                    ->assertSee($des);
+                    ->assertSee($des)
+                    ->screenshot("testCreateCategorySuccess");
         });
     }
 
@@ -53,7 +53,8 @@ class CategoryTest extends DuskTestCase
             $browser->loginAs($this->user)
                     ->visit(new CreateCategory)
                     ->press('Submit')
-                    ->assertSee("The name field is required.");
+                    ->assertSee("The name field is required.")
+                    ->screenshot("testCreateCategoryFail");
         });
     }
 
@@ -71,7 +72,8 @@ class CategoryTest extends DuskTestCase
                     ->visit(new CreateCategory)
                     ->type('@name', $category->name)
                     ->press('Submit')
-                    ->assertSee("The name has already been taken.");
+                    ->assertSee("The name has already been taken.")
+                    ->screenshot("testCreateCategoryFailExist");
         });
     }
 
@@ -89,7 +91,8 @@ class CategoryTest extends DuskTestCase
                     ->visit('/admin/category')
                     ->click('#delete-'.$category->id)
                     ->assertPathIs('/admin/category')
-                    ->assertDontSee($category->name);
+                    ->assertDontSee($category->name)
+                    ->screenshot("testDeleteCategory");
         });
     }
 
@@ -106,7 +109,8 @@ class CategoryTest extends DuskTestCase
                     ->visit('/admin/category')
                     ->click('#delete-'.$category->getDefaultId())
                     ->assertPathIs('/admin/category')
-                    ->assertSee(config('constants.CATEGORY_DEFAULT'));
+                    ->assertSee(config('constants.CATEGORY_DEFAULT'))
+                    ->screenshot("testCantDeleteDefaultCategory");
         });
     }
 }

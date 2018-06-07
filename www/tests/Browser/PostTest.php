@@ -43,6 +43,7 @@ class PostTest extends DuskTestCase
                     ->click("@submit")
                     ->assertPathIs('/admin/posts')
                     ->assertSee($title)
+                    ->screenshot("testCreatePostSuccess")
                     ->logout();
         });
     }
@@ -65,7 +66,7 @@ class PostTest extends DuskTestCase
                     ->assertSee('The title field is required.')
                     ->assertSee('The intro field is required.')
                     ->assertSee('The content field is required.')
-                    ->screenshot('testUpdatePostFailValidate')
+                    ->screenshot("testCreatePostFail")
                     ->logout();
         });
     }
@@ -93,6 +94,7 @@ class PostTest extends DuskTestCase
                     ->assertPathIs('/admin/posts')
                     ->assertSee($title)
                     ->assertSee('draft')
+                    ->screenshot("testUpdatePostSuccess")
                     ->logout();
         });
     }
@@ -121,7 +123,7 @@ class PostTest extends DuskTestCase
                     ->assertSee('The title field is required.')
                     ->assertSee('The intro field is required.')
                     ->assertSee('The content field is required.')
-                    ->screenshot('testUpdatePostFailValidate')
+                    ->screenshot("testUpdatePostFailValidate")
                     ->logout();
         });
     }
@@ -141,6 +143,7 @@ class PostTest extends DuskTestCase
                     ->visit("/admin/posts?page=2")
                     ->assertSee($posts[20]->title)
                     ->assertSee($posts[21]->title)
+                    ->screenshot("testListPost")
                     ->logout();
         });
     }
@@ -157,6 +160,7 @@ class PostTest extends DuskTestCase
                     ->visit("/admin/posts?title=" . urlencode($posts[0]->title))
                     ->assertSee($posts[0]->title)
                     ->assertDontSee($posts[19]->title)
+                    ->screenshot("testListPostSearch")
                     ->logout();
         });
     }
@@ -174,6 +178,7 @@ class PostTest extends DuskTestCase
                     ->press("Delete")
                     ->assertPathIs("/admin/posts")
                     ->assertDontSee($post->title)
+                    ->screenshot("testDeletePost")
                     ->logout();
         });
     }

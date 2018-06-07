@@ -27,6 +27,7 @@ class LoginTest extends DuskTestCase
                     ->type('password', 'secret')
                     ->press('Login')
                     ->assertPathIs('/admin')
+                    ->screenshot("testLoginSuccess")
                     ->logout();
         });
     }
@@ -40,7 +41,8 @@ class LoginTest extends DuskTestCase
             $browser->visit('/admin/login')
                     ->press('Login')
                     ->assertSee('The email field is required.')
-                    ->assertSee('The password field is required.');
+                    ->assertSee('The password field is required.')
+                    ->screenshot("testLoginFailCauseValidate");
         });
     }
 
@@ -59,7 +61,8 @@ class LoginTest extends DuskTestCase
                     ->type('email', str_random(12))
                     ->type('password', str_random(12))
                     ->press('Login')
-                    ->assertSee('These credentials do not match our records.');
+                    ->assertSee('These credentials do not match our records.')
+                    ->screenshot("testLoginFailWrongInformation");
         });
     }
 }

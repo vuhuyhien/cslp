@@ -28,7 +28,8 @@ class HomeTest extends DuskTestCase
                     ->assertSee($posts[19]->title)
                     ->visit("/?page=2")
                     ->assertSee($posts[20]->title)
-                    ->assertSee($posts[21]->title);
+                    ->assertSee($posts[21]->title)
+                    ->screenshot("testViewPosts");
         });
     }
 
@@ -46,7 +47,8 @@ class HomeTest extends DuskTestCase
             $browser->visit("/view/" . $posts[0]->id)
                     ->assertSee($posts[0]->title)
                     ->assertSee($posts[0]->intro)
-                    ->assertSee($posts[0]->content);
+                    ->assertSee($posts[0]->content)
+                    ->screenshot("testViewSinglePost");
         });
     }
 
@@ -67,7 +69,8 @@ class HomeTest extends DuskTestCase
             $title = $this->faker->sentence();
             $browser->visit("/?category=" . $category->alias)
                     ->assertSee($post->title)
-                    ->assertSee($post->intro);
+                    ->assertSee($post->intro)
+                    ->screenshot("testViewCategoryPost");
         });
     }
 }
