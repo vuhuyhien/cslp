@@ -51,7 +51,7 @@
                             <input type="file" name="image" class="form-control" id="posts-image" placeholder="Enter title">
                         </div>
                         <div class="col-6">
-                            <img src="{{asset('storage')}}/{{$post->image}}" width="100"/>
+                            <img src="{{Utils::imageUrl($post->image)}}" width="100"/>
                         </div>
                     </div>
                     <div class="form-group">

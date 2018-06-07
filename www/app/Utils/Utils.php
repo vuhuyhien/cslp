@@ -49,4 +49,13 @@ final class Utils
             return;
         }
     }
+
+    public static function imageUrl($url)
+    {
+        if(strrpos($url, 'http://') !== false || strrpos($url, 'https://') !== false) {
+            return $url;
+        }
+
+        return asset('storage/' . $url);
+    }
 }

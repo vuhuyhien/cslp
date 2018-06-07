@@ -3,7 +3,7 @@
 @section('content')
 <div class="container" id="home">
     <div class="row header">
-        <h1>{{$author}}</h1>
+        <h1><a href="{{route('home')}}">{{$author}}</a></h1>
         <small>Just do it!</small>
         <div class="form-search">
             <form class="form-inline" method="GET" action="{{route('home')}}">
@@ -13,19 +13,37 @@
             </form>
         </div>
     </div>
-    <div class="row article">
-        <article>
-            <h3>{{$post->title}}</h3>
-            <div>{{$post->created_at}}</div>
-            <div>{!!$post->intro!!}</div>
-            <div>
-                <img src="{{asset('storage')}}/{{$post->image}}" width="100%"/>
-            </div>
-            <div>{!!$post->content!!}</div>
-            <div class="read-more">
-                {{$author}}
-            </div>
-        </article>
+    <div class="row article view">
+        
+        <div class="col-10">
+            <article>
+                <h3>{{$post->title}}</h3>
+                <div>{{$post->created_at}}</div>
+                <div><b>{!!$post->intro!!}</b></div>
+                <div>
+                    <img src="{{Utils::imageUrl($post->image)}}" width="100%"/>
+                </div>
+                <div>{!!$post->content!!}</div>
+                <div class="read-more">
+                    <small>Author</small>
+                    <div class="author">
+                        <div class="info">
+                            <p>{{Auth::user()->name}}</p>
+                            <p><a href="mailto:{{Auth::user()->email}}">{{Auth::user()->email}}</a></p>
+                        </div>
+                        <div class="avt">
+                            <img src="{{Utils::get_gravatar(Auth::user()->email, 90, 'retro')}}" />
+                        </div>
+                    </div>
+                </div>
+            </article>
+            
+        </div>
+        <div class="col-2">
+            @include('sections.menu')
+        </div>
     </div>
+
+    
 </div>
 @endsection

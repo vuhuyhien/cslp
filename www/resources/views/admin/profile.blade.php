@@ -9,11 +9,12 @@
                     <div class="card-body row">
                         <div class="col-2">
                             <div id="avatar">
-                                <img src="{{ Utils::get_gravatar(Auth::user()->email, 160) }}" />
+                                <img src="{{ Utils::get_gravatar(Auth::user()->email, 160, 'retro') }}" />
                                 <div class="change-avatar">
                                     <a href="https://gravatar.com/gravatars/new/">{{__('Change avatar')}}</a>
                                 </div>
                             </div>
+                            <small>developed by <a style="color:blue" href="https://gravatar.com/gravatars/new/">Gravatar</a></small>
                         </div>
                         <div class="col-10">
                             @if (session('status'))

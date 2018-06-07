@@ -46,7 +46,7 @@
                     @foreach($posts as $key => $post)
                         <tr>
                             <th scope="row">{{$key + ($posts->currentPage() - 1) * $posts->perPage() + 1}}</th>
-                            <td><img src="{{asset('storage')}}/{{$post->image}}" width="30" /></td>
+                            <td><img src="{{Utils::imageUrl($post->image)}}" width="30" /></td>
                             <td>{{$post->title}}</td>
                             <td>{{$post->type ? 'public' : 'draft'}}</td>
                             <td>{{$post->category->name}}</td>

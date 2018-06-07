@@ -14,16 +14,21 @@
         </div>
     </div>
     <div class="row article">
-        @foreach($posts as $post)
-            <article>
-                <h3>{{$post->title}}</h3>
-                <div>{{$post->created_at}}</div>
-                <div>{!!$post->intro!!}</div>
-                <div class="read-more">
-                    <a href="{{route('view-post', $post->id)}}">READ MORE</a>
-                </div>
-            </article>
-        @endforeach
+        <div class="col-10">
+            @foreach($posts as $post)
+                <article>
+                    <h3>{{$post->title}}</h3>
+                    <div>{{$post->created_at}}</div>
+                    <div>{!!$post->intro!!}</div>
+                    <div class="read-more">
+                        <a href="{{route('view-post', $post->id)}}">READ MORE</a>
+                    </div>
+                </article>
+            @endforeach
+        </div>
+        <div class="col-2">
+            @include('sections.menu')
+        </div>
     </div>
     <div class="row">
         {{$posts ? $posts->links() : ''}}
