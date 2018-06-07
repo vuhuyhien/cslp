@@ -88,7 +88,7 @@ cd cslp
 
 ## Run the application
 
-1. Copying the composer configuration file : 
+1. Create the docker environment file : 
 
     ```sh
     cp .env.docker .env
