@@ -16,7 +16,7 @@ If you want running project manually, please read [here](www/README.md)
 
     By this point we’ll have all the project pieces in place.
 
-4. [PHPMyadmin](#PHPMyadmin) [`Optional`]
+4. [PHPMyadmin](#phpmyadmin) [`Optional`]
 
     Manage database with phpmyadmin
 
