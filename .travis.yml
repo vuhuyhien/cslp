@@ -18,6 +18,7 @@ before_install:
 install:
   - cp .env.travis .env
   - travis_retry composer install --no-interaction --prefer-dist --no-suggest
+  - composer update facebook/webdriver
   - yarn install
 
 before_script:
